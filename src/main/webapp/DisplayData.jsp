@@ -18,16 +18,33 @@
     try {
         Class.forName("org.postgresql.Driver");
         Connection connection = DriverManager.getConnection(url, username, password);
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
+        Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM users ORDER BY status desc");
 
         while (resultSet.next()) {
             String name = resultSet.getString("name");
             String email = resultSet.getString("email");
             String message = resultSet.getString("message");
+            Boolean statusBool = resultSet.getBoolean("status");
+            int id = resultSet.getInt("id");
+            
 
-            // Display user data on the page
-            out.println("<p>Name: " + name + "<br>Email: " + email + "<br>Message: " + message + "</p>");
+            String status;
+            if (statusBool) {
+                status = "Active";
+            } else {
+                status = "Archived";
+            }
+%>
+            <p>Name: <%= name %><br>Email: <%= email %><br>Message: <%= message %><br>Status: <%= status %>
+                <form action="ToggleStatus" method="post" style="display: inline;">
+                    <input type="hidden" name="id" value="<%= id %>">
+                    <input type="hidden" name="statusBool" value="<%= statusBool %>">
+                    <input type="submit" value="Toggle Status">
+                </form>
+            </p>
+            <hr>
+<%
         }
 
         resultSet.close();
@@ -37,6 +54,8 @@
         e.printStackTrace();
     }
 %>
+
+</body>
 
 </body>
 </html>

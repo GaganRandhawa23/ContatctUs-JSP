@@ -22,14 +22,8 @@ public class AdminDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                String dbName = resultSet.getString("name");
-                String dbPassword = resultSet.getString("password");
-
-               
-                if (dbName.equals(admin.getName()) && dbPassword.equals(admin.getPassword())) {
                     return true;  
                 }
-            }
 
         } catch (SQLException e) {
             e.printStackTrace();

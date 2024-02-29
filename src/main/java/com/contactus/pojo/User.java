@@ -5,7 +5,14 @@ public class User {
 	private String name;
 	private String email;
 	private String message;
+	private boolean status;
 	
+	public boolean isStatus() {
+		return status;
+	}
+//	public void setStatus(boolean status) {
+//		this.status = status;
+//	}
 	public String getName() {
 		return name;
 	}
