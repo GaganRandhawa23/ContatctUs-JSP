@@ -22,13 +22,12 @@ public class AdminDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                // Admin found in the database
                 String dbName = resultSet.getString("name");
                 String dbPassword = resultSet.getString("password");
 
-                // Check if the retrieved credentials match the Admin object
+               
                 if (dbName.equals(admin.getName()) && dbPassword.equals(admin.getPassword())) {
-                    return true;  // Credentials match
+                    return true;  
                 }
             }
 

@@ -30,6 +30,10 @@ public class AddUser extends HttpServlet {
 			e.printStackTrace();
 		}
 		
+		
+		
+		response.sendRedirect("index.html");
+		
 	}
 
 }
