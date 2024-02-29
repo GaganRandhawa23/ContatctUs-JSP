@@ -3,7 +3,7 @@ package com.contactus.servlet;
 import java.io.IOException;
 import com.contactus.*;
 import com.contactus.pojo.User;
-
+import com.contactus.Dao.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,7 +23,12 @@ public class AddUser extends HttpServlet {
 		user.setEmail ((request.getParameter("email")).toString());
 		user.setMessage ((request.getParameter("message")).toString());
 		
-		
+		try {
+			UserDao.addUserInDatabase(user);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 
