@@ -6,6 +6,15 @@
     <meta charset="UTF-8">
     <title>User Data</title>
 </head>
+<style>
+table{
+border-collapse:collapse;
+}
+th,td{
+	border:1px solid black;
+	padding: 10px;
+}
+</style>
 <body>
 
 <h2>User Data</h2>
@@ -19,34 +28,50 @@
         Class.forName("org.postgresql.Driver");
         Connection connection = DriverManager.getConnection(url, username, password);
         Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM users ORDER BY status desc");
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM users ORDER BY status DESC");
 
-        while (resultSet.next()) {
-            String name = resultSet.getString("name");
-            String email = resultSet.getString("email");
-            String message = resultSet.getString("message");
-            Boolean statusBool = resultSet.getBoolean("status");
-            int id = resultSet.getInt("id");
-            
+%>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Message</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+<%
+            while (resultSet.next()) {
+                String name = resultSet.getString("name");
+                String email = resultSet.getString("email");
+                String message = resultSet.getString("message");
+                Boolean statusBool = resultSet.getBoolean("status");
+                int id = resultSet.getInt("id");
 
-            String status;
-            if (statusBool) {
-                status = "Active";
-            } else {
-                status = "Archived";
+                String status = (statusBool) ? "Active" : "Archived";
+%>
+                <tr>
+                    <td><%= name %></td>
+                    <td><%= email %></td>
+                    <td><%= message %></td>
+                    <td><%= status %></td>
+                    <td>
+                        <form action="ToggleStatus" method="post" style="display: inline;">
+                            <input type="hidden" name="id" value="<%= id %>">
+                            <input type="hidden" name="statusBool" value="<%= statusBool %>">
+                            <input type="submit" value="Toggle Status">
+                        </form>
+                    </td>
+                </tr>
+<%
             }
 %>
-            <p>Name: <%= name %><br>Email: <%= email %><br>Message: <%= message %><br>Status: <%= status %>
-                <form action="ToggleStatus" method="post" style="display: inline;">
-                    <input type="hidden" name="id" value="<%= id %>">
-                    <input type="hidden" name="statusBool" value="<%= statusBool %>">
-                    <input type="submit" value="Toggle Status">
-                </form>
-            </p>
-            <hr>
-<%
-        }
+            </tbody>
+        </table>
 
+<%
         resultSet.close();
         statement.close();
         connection.close();
@@ -54,8 +79,6 @@
         e.printStackTrace();
     }
 %>
-
-</body>
 
 </body>
 </html>

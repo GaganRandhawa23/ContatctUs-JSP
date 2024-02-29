@@ -1,6 +1,8 @@
 package com.contactus.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import com.contactus.*;
 import com.contactus.pojo.User;
 import com.contactus.Dao.*;
@@ -30,9 +32,10 @@ public class AddUser extends HttpServlet {
 			e.printStackTrace();
 		}
 		
+		PrintWriter out = response.getWriter();
+        out.println("Form Submitted Successfully");
 		
-		
-		response.sendRedirect("index.html");
+		//response.sendRedirect("index.html");
 		
 	}
 
