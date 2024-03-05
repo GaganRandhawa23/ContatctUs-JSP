@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +10,6 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
-            
         }
 
         h1 {
@@ -57,40 +57,20 @@
             cursor: pointer;
             margin-top: 15px;
         }
-        
-        .login-button {
-		    position: absolute;
-		    top: 20px;   /* Adjust the distance from the top */
-		    right: 20px; /* Adjust the distance from the right */
-		}
-		
-		.login-button a {
-		    padding: 8px 15px;
-		    background-color: #0095ff;  /* Example color */
-		    color: white;
-		    text-decoration: none;
-		    border-radius: 5px;
-		}
     </style>
 </head>
 
 <body>
     <h1>Contact Us</h1>
     <p>Please fill out this form to contact us.</p>
-    <form action="AddUser" method="post">
-        
+    <form action="contactus" method="post">
+        <label for="fname">Your name:</label>
         <input type="text" id="fname" name="name" placeholder="Your name..">
-
-        
-        <input type="email" id="lname" name="email" placeholder="Your email..">
-
-        
+        <label for="lname">Your email:</label>
+        <input type="email" name="email" placeholder="example@example.com">
+        <label for="subject">Message:</label>
         <textarea id="subject" name="message" style="height:200px"></textarea>
-
         <input type="submit" value="Submit">
     </form>
-    <div class="login-button">
-         <a href="login.html">Login</a> 
-    </div>
 </body>
 </html>
